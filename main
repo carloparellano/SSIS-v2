@@ -1,0 +1,18 @@
+from tkinter import *
+from tkinter import ttk
+import tkinter.messagebox
+import mysql.connector
+
+class MainDB:
+    
+    def __init__(self, root):
+        self.root = root
+        titlespace = " "
+        self.root.title(titlespace + "Simple Student Information System v2")
+        self.root.geometry("700x650+300+0")
+        self.root.resizable(width=False, height=False)
+
+if __name__ == '__main__':
+    root = Tk()
+    application = MainDB(root)
+    root.mainloop()
