@@ -8,9 +8,67 @@ class MainDB:
     def __init__(self, root):
         self.root = root
         titlespace = " "
-        self.root.title(titlespace + "Simple Student Information System v2")
-        self.root.geometry("700x650+300+0")
+        self.root.title(titlespace + "SSIS v2")
+        self.root.geometry("790x700+300+0")
         self.root.resizable(width=False, height=False)
+        
+        MainFrame = Frame(self.root, bd=10, width =770, height=700, relief = RIDGE, bg ='#957DAD')
+        MainFrame.grid()
+        
+        TitleFrame = Frame(MainFrame, bd=7, width =770, height=100, relief = RIDGE, bg ='#E0BBE4')
+        TitleFrame.grid(row = 0,column = 0)
+        TopFrame3 = Frame(MainFrame, bd=5, width=770, height=500, relief = RIDGE, bg ='#E0BBE4')
+        TopFrame3.grid(row=1,column=0)
+        
+        LeftFrame = Frame(TopFrame3, bd=5, width=770, height=400, padx=2, bg ='#957DAD', relief = RIDGE)
+        LeftFrame.pack(side=LEFT)
+        LeftFrame1= Frame(LeftFrame, bd=5, width=600, height=180, padx=2, pady=4, bg ='#E0BBE4', relief=RIDGE)
+        LeftFrame1.pack(side=TOP, padx=0, pady=0)
+        
+        RightFrame1 = Frame(TopFrame3, bd=5, width=100, height=400, padx=2, bg ='#957DAD', relief = RIDGE)
+        RightFrame1.pack(side=RIGHT)
+        RightFrame1a = Frame(RightFrame1, bd=5, width=90, height=300, padx=2, pady=2, bg ='#E0BBE4', relief = RIDGE)
+        RightFrame1a.pack(side=TOP, padx=0, pady=0)      
+        
+        self.lbltitle = Label(TitleFrame, font = ('Menlo', 21, 'bold'), text = "Simple Student Information System")
+        self.lbltitle.grid(row = 0, column = 0, padx = 132) 
+        
+        self.lblStudentID = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Student ID")
+        self.lblStudentID.grid(row = 1, column = 0, sticky = W, padx = 5)  
+        self.entStudentID = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.entStudentID.grid(row = 1, column = 1, sticky = W, padx = 5) 
+        
+        self.lblFirstname = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "First Name" )
+        self.lblFirstname.grid(row = 2, column = 0, sticky = W, padx = 5)  
+        self.entFirstname = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.entFirstname.grid(row = 2, column = 1, sticky = W, padx = 5) 
+        
+        self.lblLastname = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Last Name")
+        self.lblLastname.grid(row = 3, column = 0, sticky = W, padx = 5)  
+        self.entLastname = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.entLastname.grid(row = 3, column = 1, sticky = W, padx = 5) 
+        
+        self.lblGender = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Gender")
+        self.lblGender.grid(row = 4, column = 0, sticky = W, padx = 5)  
+        self.cboGender = ttk.Combobox(LeftFrame1, font = ('arial', 12), width = 43, state = 'readonly')
+        self.cboGender['values'] = (' ', 'Female', 'Male')
+        self.cboGender.current(0)
+        self.cboGender.grid(row = 4, column = 1, sticky = W, padx = 5) 
+        
+        self.lblYearlevel = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Year Level" )
+        self.lblYearlevel.grid(row = 5, column = 0, sticky = W, padx = 5)  
+        self.txtYearlevel = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.txtYearlevel.grid(row = 5, column = 1, sticky = W, padx = 5) 
+        
+        self.lblCourse = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Course")
+        self.lblCourse.grid(row = 6, column = 0, sticky = W, padx = 5)  
+        self.txtCourse = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.txtCourse.grid(row = 6, column = 1, sticky = W, padx = 5) 
+        
+        self.lblCoursecode = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Course Code")
+        self.lblCoursecode.grid(row = 7, column = 0, sticky = W, padx = 5)  
+        self.txtCoursecode= Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.txtCoursecode.grid(row = 7, column = 1, sticky = W, padx = 5) 
 
 if __name__ == '__main__':
     root = Tk()
