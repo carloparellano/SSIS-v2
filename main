@@ -38,37 +38,56 @@ class MainDB:
         self.entStudentID = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
         self.entStudentID.grid(row = 1, column = 1, sticky = W, padx = 5) 
         
-        self.lblFirstname = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "First Name" )
-        self.lblFirstname.grid(row = 2, column = 0, sticky = W, padx = 5)  
-        self.entFirstname = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
-        self.entFirstname.grid(row = 2, column = 1, sticky = W, padx = 5) 
-        
-        self.lblLastname = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Last Name")
-        self.lblLastname.grid(row = 3, column = 0, sticky = W, padx = 5)  
-        self.entLastname = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
-        self.entLastname.grid(row = 3, column = 1, sticky = W, padx = 5) 
+        self.lblFullname = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Full Name" )
+        self.lblFullname.grid(row = 2, column = 0, sticky = W, padx = 5)  
+        self.entFullname = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
+        self.entFullname.grid(row = 2, column = 1, sticky = W, padx = 5)
         
         self.lblGender = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Gender")
-        self.lblGender.grid(row = 4, column = 0, sticky = W, padx = 5)  
+        self.lblGender.grid(row = 3, column = 0, sticky = W, padx = 5)  
         self.cboGender = ttk.Combobox(LeftFrame1, font = ('arial', 12), width = 43, state = 'readonly')
         self.cboGender['values'] = (' ', 'Female', 'Male')
         self.cboGender.current(0)
-        self.cboGender.grid(row = 4, column = 1, sticky = W, padx = 5) 
+        self.cboGender.grid(row = 3, column = 1, sticky = W, padx = 5) 
         
         self.lblYearlevel = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Year Level" )
-        self.lblYearlevel.grid(row = 5, column = 0, sticky = W, padx = 5)  
+        self.lblYearlevel.grid(row = 4, column = 0, sticky = W, padx = 5)  
         self.txtYearlevel = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
-        self.txtYearlevel.grid(row = 5, column = 1, sticky = W, padx = 5) 
+        self.txtYearlevel.grid(row = 4, column = 1, sticky = W, padx = 5) 
         
         self.lblCourse = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Course")
-        self.lblCourse.grid(row = 6, column = 0, sticky = W, padx = 5)  
+        self.lblCourse.grid(row = 5, column = 0, sticky = W, padx = 5)  
         self.txtCourse = Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
-        self.txtCourse.grid(row = 6, column = 1, sticky = W, padx = 5) 
+        self.txtCourse.grid(row = 5, column = 1, sticky = W, padx = 5) 
         
         self.lblCoursecode = Label(LeftFrame1, font = ('arial', 12, 'bold'), text = "Course Code")
-        self.lblCoursecode.grid(row = 7, column = 0, sticky = W, padx = 5)  
+        self.lblCoursecode.grid(row = 6, column = 0, sticky = W, padx = 5)  
         self.txtCoursecode= Entry(LeftFrame1, font = ('arial', 12), bd = 5, width = 44, justify = 'left')
-        self.txtCoursecode.grid(row = 7, column = 1, sticky = W, padx = 5) 
+        self.txtCoursecode.grid(row = 6, column = 1, sticky = W, padx = 5) 
+        
+        scroll_y = Scrollbar(LeftFrame, orient = VERTICAL)
+        
+        self.student_records = ttk.Treeview(LeftFrame, height = 12, column = ("stid", "fullname", "gender", 
+        "yearlevel", "course", "coursecode"), yscrollcommand = scroll_y.set )
+        
+        scroll_y.pack(side = RIGHT, fill = Y)
+        self.student_records.heading("stid", text = "Student ID")
+        self.student_records.heading("fullname", text = "Full Name")
+        self.student_records.heading("gender", text = "Gender")
+        self.student_records.heading("yearlevel", text = "Year Level")
+        self.student_records.heading("course", text = "Course")
+        self.student_records.heading("coursecode", text = "Course Code")
+        
+        self.student_records ['show' ] = 'headings' 
+        
+        self.student_records.column("stid", width = 40)
+        self.student_records.column("fullname", width = 100)
+        self.student_records.column("gender", width = 40)
+        self.student_records.column("yearlevel", width = 40)
+        self.student_records.column("course", width = 100)
+        self.student_records.column("coursecode", width = 50)
+        
+        self.student_records.pack(fill = BOTH, expand = 1)
 
 if __name__ == '__main__':
     root = Tk()
