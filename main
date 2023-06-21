@@ -56,10 +56,9 @@ class MainDB:
                 tkinter.messagebox.showerror("SSIS", "Enter Correct Details")
 
             else:
-                sqlCon = mysql.connector.connect(host="localhost", user="root", password="12345", database="student")
-
+                sqlCon = mysql.connector.connect(host="localhost", user="root", password="12345", database="SSISv2")
                 cur = sqlCon.cursor()
-                cur.execute("insert into student values(%s, %s, %s, %s, %s, %s )", (
+                cur.execute("INSERT INTO student values(%s, %s, %s, %s, %s, %s )", (
                     StudentID.get(),
                     Fullname.get(),
                     Gender.get(),
@@ -69,8 +68,82 @@ class MainDB:
                 ))
                 sqlCon.commit()
                 sqlCon.close()
-                tkinter.messagebox.showinfo ("SSIS", "Data Entered Successfully")
+                tkinter.messagebox.showinfo ("SSIS", "Information Entered Successfully")
+                
+        def DisplayData():
+            sqlCon = mysql.connector.connect(host="localhost", user="root", password="12345", database="SSISv2")
+            cur = sqlCon.cursor()
+            cur.execute("SELECT * FROM student")
+            result = cur.fetchall()
+            if len(result) != 0:
+                self.student_records.delete(*self.student_records.get_children())
+            for row in result:
+                self.student_records.insert('', END, values=row)
+                
+            sqlCon.commit()
+            sqlCon.close()
             
+        def StudentInfo(ev):
+            viewInfo = self.student_records.focus()
+            learnerData = self.student_records.item(viewInfo)
+            row = learnerData['values']
+            StudentID.set(row[0]),
+            Fullname.set(row[1]),
+            Gender.set(row[2]),
+            Yearlevel.set(row[3]),
+            Course.set(row[4]),
+            Coursecode.set(row[5])
+            
+
+        def update():
+            sqlCon = mysql.connector.connect(host="localhost", user="root", password="12345", database="SSISv2")
+            cur = sqlCon.cursor()
+            cur.execute("UPDATE student SET fullname=%s, gender=%s, yearlevel=%s, course=%s, coursecode=%s WHERE studentID=%s", (
+            Fullname.get(),
+            Gender.get(),
+            Yearlevel.get(),
+            Course.get(),
+            Coursecode.get(),
+            StudentID.get()
+                ))
+            sqlCon.commit()
+            sqlCon.close()
+            tkinter.messagebox.showinfo("SSIS", "Record Updated Successfully")
+            
+        def deleteDB():
+            sqlCon = mysql.connector.connect(host="localhost", user="root", password="12345", database="SSISv2")
+            cur = sqlCon.cursor()
+            cur.execute("DELETE FROM student WHERE studentID=%s", (StudentID.get(),))
+            sqlCon.commit()
+            DisplayData()
+            sqlCon.close()
+            tkinter.messagebox.showinfo("SSIS", "Information Deleted Successfully")
+            Reset()
+        
+        def searchDB():
+            try:
+                sqlCon = mysql.connector.connect(host="localhost", user="root", password="12345", database="SSISv2")
+                cur = sqlCon.cursor()
+                cur.execute("SELECT * FROM student WHERE studentID=%s", (StudentID.get(),))
+                
+                row = cur.fetchall()
+                
+                StudentID.set(row[0])
+                Fullname.set(row[1])
+                Gender.set(row[2])
+                Yearlevel.set(row[3])
+                Course.set(row[4])
+                Coursecode.set(row[5])
+            
+                sqlCon.commit()
+            except:
+                tkinter.messagebox.showinfo("SSIS", "No Information")
+                Reset()
+            
+            sqlCon.close()
+            
+
+
         self.lbltitle = Label(TitleFrame, font = ('Menlo', 21, 'bold'), text = "Simple Student Information System")
         self.lbltitle.grid(row = 0, column = 0, padx = 132) 
         
@@ -131,21 +204,23 @@ class MainDB:
         self.student_records.column("coursecode", width = 50)
         
         self.student_records.pack(fill = BOTH, expand = 1)
+        self.student_records.bind("<ButtonRelease-1>", StudentInfo)
+        
         
         self.btnAddNew = Button(RightFrame1a, font=('arial', '16', 'bold'), text="Add New ", 
                     bd=2, pady=1, padx=24, width=0, height = 2, command = addData).grid(row = 0, column = 0, padx = 1)
         
         self.btnDisplay = Button(RightFrame1a, font=('arial', '16', 'bold'), text="  Display  ", 
-                    bd=2, pady=1, padx=24, width = 0, height = 2).grid(row = 1, column = 0, padx = 1)
+                    bd=2, pady=1, padx=24, width = 0, height = 2, command = DisplayData).grid(row = 1, column = 0, padx = 1)
         
         self.btnUpdate = Button(RightFrame1a, font=('arial', '16', 'bold'), text="  Update  ", 
-                    bd=2, pady=1, padx=24, width = 0, height = 2).grid(row = 2, column = 0, padx = 1)
+                    bd=2, pady=1, padx=24, width = 0, height = 2, command = update).grid(row = 2, column = 0, padx = 1)
         
         self.btnDelete = Button(RightFrame1a, font=('arial', '16', 'bold'), text="  Delete   ", 
-                    bd=2, pady=1, padx=24, width = 0, height = 2).grid(row = 3, column = 0, padx = 1)
+                    bd=2, pady=1, padx=24, width = 0, height = 2, command = deleteDB).grid(row = 3, column = 0, padx = 1)
         
         self.btnSearch = Button(RightFrame1a, font=('arial', '16', 'bold'), text="  Search  ", 
-                    bd=2, pady=1, padx=24, width = 0, height = 2).grid(row = 4, column = 0, padx = 1)
+                    bd=2, pady=1, padx=24, width = 0, height = 2, command = searchDB).grid(row = 4, column = 0, padx = 1)
         
         self.btnReset = Button(RightFrame1a, font=('arial', '16', 'bold'), text="   Reset   ", 
                     bd=2, pady=1, padx=24, width = 0, height = 2, command = Reset).grid(row = 5, column = 0, padx = 1)
